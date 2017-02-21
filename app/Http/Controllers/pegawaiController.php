@@ -23,8 +23,9 @@ class pegawaiController extends Controller
     public function index()
     {
         //
-        return view('pegawai.index');
-        //$pegawai = pegawai::with('User','jabatan','golongan')->get();
+        $pegawai = pegawai::with('User','jabatan','golongan')->get();
+        return view('pegawai.index',compact('pegawai'));
+        
     }
 
     /**
@@ -35,7 +36,10 @@ class pegawaiController extends Controller
     public function create()
     {
         //
-        return view('pegawai.create');
+        $pegawai = pegawai::all();
+        $jabatan = jabatan::all();
+        $golongan = golongan::all();
+        return view('pegawai.create',compact('pegawai','jabatan','golongan'));
     }
 
     /**

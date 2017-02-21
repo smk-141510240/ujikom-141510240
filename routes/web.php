@@ -20,3 +20,5 @@ Route::get('/', 'BackController@index');
 Route::resource('pegawai','pegawaiController');
 Route::resource('jabatan','jabatanController');
 Route::resource('golongan','golonganController');
+Route::resource('kategori','kategoriController');
+Route::resource('tunjangan','tunjanganController');

@@ -96,7 +96,7 @@
                             <label for="nip" class="col-md-4 control-label">NIP</label>
 
                             <div class="col-md-6">
-                                <input id="nip" type="numeric" class="form-control" name="nip" value="{{ old('nip') }}"  >
+                                <input id="nip" type="numeric" class="form-control" name="nip" value="{{ old('nip') }}">
 
                                 @if ($errors->has('nip'))
                                     <span class="help-block">
@@ -110,8 +110,12 @@
                             <label for="jabatan_id" class="col-md-4 control-label">Jabatan</label>
 
                             <div class="col-md-6">
-                                <input id="jabatan_id" type="text" class="form-control" name="jabatan_id" value="{{ old('jabatan_id') }}" >
-
+                                <select id="jabatan_id" name="jabatan_id" class="form-control" required autofocus>
+                                    <option value="">-: pilih jabatan :-</option>
+                                    @foreach($jabatan as $data)
+                                    <option value="{{$data->id}}">{{$data->nama_jabatan}}</option>
+                                    @endforeach
+                                </select>
                                 @if ($errors->has('jabatan_id'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('jabatan_id') }}</strong>
@@ -123,8 +127,12 @@
                             <label for="golongan_id" class="col-md-4 control-label">Golongan</label>
 
                             <div class="col-md-6">
-                                <input id="golongan_id" type="text" class="form-control" name="golongan_id" value="{{ old('golongan_id') }}" >
-
+                                <select id="golongan_id" name="golongan_id" class="form-control" required autofocus>
+                                    <option value="">-: pilih golongan :-</option>
+                                    @foreach($golongan as $data)
+                                    <option value="{{$data->id}}">{{$data->nama_golongan}}</option>
+                                    @endforeach
+                                </select>
                                 @if ($errors->has('golongan_id'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('golongan_id') }}</strong>
@@ -165,4 +173,5 @@
         </div>
     </div>
 </div>
+
 @endsection
