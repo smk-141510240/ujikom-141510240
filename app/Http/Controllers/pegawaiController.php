@@ -7,7 +7,7 @@ use App\User;
 use App\jabatan;
 use App\golongan;
 use Illuminate\Http\Request;
-
+use Input;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -64,13 +64,20 @@ class pegawaiController extends Controller
             'permission' => $request->get('permission'),
             'password' => bcrypt($request->get('password')),
         ]);
-
-        $pegawai=new pegawai;
-        $pegawai->nip = $request->get('nip');
-        $pegawai->jabatan_id = $request->get('jabatan_id');
-        $pegawai->golongan_id = $request->get('golongan_id');
+        $file = Input::file('photo');
+        $dis = public_path().'/assets';
+        $filen = str_random(6).'_'.$file->getClientOriginalName();
+        $upload = $file->move($dis,$filen);
+        if(Input::hasFile('photo'))
+        {
+            $pegawai=new pegawai;
+            $pegawai->nip = Input::get('nip');
+            $pegawai->jabatan_id = Input::get('jabatan_id');
+            $pegawai->golongan_id = Input::get('golongan_id');    
+        }
+        $pegawai->photo=$filen;
         $pegawai->user_id = $user->id;
-        $pegawai->photo = $request->get('photo');
+        
         $pegawai->save();
         return redirect('/pegawai');
     }

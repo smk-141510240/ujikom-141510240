@@ -39,13 +39,14 @@ class golonganController extends Controller
     {
         $rules=['kode_golongan'=>'required|unique:golongans',
                 'nama_golongan'=>'required',
-                'besaran_uang'=>'required|numeric'];
+                'besaran_uang'=>'required|numeric|min:1'];
 
         $sms=[  'kode_golongan.required'=>'Harus Di Isi',
                 'kode_golongan.unique'=>'Tidak Boleh Sama',
                 'nama_golongan.required'=>'Harus Di Isi',
                 'besaran_uang.required'=>'Harus Di Isi',
-                'besaran_uang.numeric'=>'Harus Angka'
+                'besaran_uang.numeric'=>'Harus Angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
                 ];
         $valid=Validator::make(Input::all(),$rules,$sms);
         if ($valid->fails()) {
@@ -97,10 +98,50 @@ class golonganController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $golongan1 = golongan::where('id',$id)->first();
+        if ($golongan1['kode_golongan'] != request('kode_golongan')) 
+        {
+            $rules=['kode_golongan'=>'required|unique:golongans',
+                'nama_golongan'=>'required',
+                'besaran_uang'=>'required|numeric|min:1'];
+
+            $sms=['kode_golongan.required'=>'Harus Di Isi',
+                'kode_golongan.unique'=>'Tidak Boleh Sama',
+                'nama_golongan.required'=>'Harus Di Isi',
+                'besaran_uang.required'=>'Harus Di Isi',
+                'besaran_uang.numeric'=>'Harus Angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
+                ];    
+        }
+        else
+        {
+            $rules=['kode_golongan'=>'required',
+                'nama_golongan'=>'required',
+                'besaran_uang'=>'required|numeric|min:1'];
+
+            $sms=['kode_golongan.required'=>'Harus Di Isi',
+                'kode_golongan.unique'=>'Tidak Boleh Sama',
+                'nama_golongan.required'=>'Harus Di Isi',
+                'besaran_uang.required'=>'Harus Di Isi',
+                'besaran_uang.numeric'=>'Harus Angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
+                ];
+        }
+        
+        $valid=Validator::make(Input::all(),$rules,$sms);
+        if ($valid->fails()) {
+  
+            return redirect()->back()
+            ->withErrors($valid)
+            ->withInput();
+        }
+        else
+        {
         $golonganUp=Request::all();
         $golongan=golongan::find($id);
         $golongan->update($golonganUp);
         return redirect('golongan');
+        }
     }
 
     /**

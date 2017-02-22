@@ -45,13 +45,14 @@ class kategoriController extends Controller
         $rules=['kode_lembur'=>'required|unique:kategori_lemburs',
                 'jabatan_id'=>'required',
                 'golongan_id'=>'required',
-                'besaran_uang'=>'required|numeric'];
+                'besaran_uang'=>'required|numeric|min:1'];
         $sms=['kode_lembur.required'=>'Data tidak boleh kosong',
                 'kode_lembur.unique'=>'Data tidak boleh sama',
                 'jabatan_id.required'=>'Data tidak boleh kosong',
                 'golongan_id.required'=>'Data tidak boleh kosong',
                 'besaran_uang.required'=>'Data tidak boleh kosong',
-                'besaran_uang.numeric'=>'Hanya angka'
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',                
                 ];
         $valid=Validator::make(Input::all(),$rules,$sms);
         if ($valid->fails()) {
@@ -106,30 +107,52 @@ class kategoriController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //$rules=['kode_jabatan'=>'required|unique:jabatans',
-        //        'nama_jabatan'=>'required',
-        //        'besaran_uang'=>'required|numeric'];
-        //$sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
-        //        'kode_jabatan.unique'=>'Data tidak boleh sama',
-        //        'nama_jabatan.required'=>'Data tidak boleh kosong',
-        //        'besaran_uang.required'=>'Data tidak boleh kosong',
-        //        'besaran_uang.numeric'=>'Hanya angka'
-        //       ];
-        //$valid=Validator::make(Input::all(),$rules,$sms);
-        //if ($valid->fails()) {
+        $kategori1 = kategori_lembur::where('id',$id)->first();
+        if ($kategori1['kode_lembur'] != request('kode_lembur'))
+        {
+            $rules=['kode_lembur'=>'required|unique:kategori_lemburs',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'besaran_uang'=>'required|numeric|min:1'];
+            $sms=['kode_lembur.required'=>'Data tidak boleh kosong',
+                'kode_lembur.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'besaran_uang.required'=>'Data tidak boleh kosong',
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',                
+                ];
+        }
+        else
+        {
+            $rules=['kode_lembur'=>'required',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'besaran_uang'=>'required|numeric|min:1'];
+            $sms=['kode_lembur.required'=>'Data tidak boleh kosong',
+                'kode_lembur.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'besaran_uang.required'=>'Data tidak boleh kosong',
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',                
+                ];    
+        }
+        $valid=Validator::make(Input::all(),$rules,$sms);
+        if ($valid->fails()) {
 
              
-        //    return redirect('kategori/edit')
-        //    ->withErrors($valid)
-        //    ->withInput();
-        //}
-        //else
-        //{
+            return redirect()->back()
+            ->withErrors($valid)
+            ->withInput();
+        }
+        else
+        {
         $kategoriUp=Request::all();
         $kategori=kategori_lembur::find($id);
         $kategori->update($kategoriUp);
         return redirect('kategori');
-        //}
+        }
     }
 
     /**

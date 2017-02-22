@@ -46,8 +46,8 @@ class tunjanganController extends Controller
                 'jabatan_id'=>'required',
                 'golongan_id'=>'required',
                 'status'=>'required',
-                'jumlah_anak'=>'required|numeric',
-                'besaran_uang'=>'required|numeric'];
+                'jumlah_anak'=>'required|numeric|min:0',
+                'besaran_uang'=>'required|numeric|min:1'];
         $sms=['kode_tunjangan.required'=>'Data tidak boleh kosong',
                 'kode_tunjangan.unique'=>'Data tidak boleh sama',
                 'jabatan_id.required'=>'Data tidak boleh kosong',
@@ -56,7 +56,9 @@ class tunjanganController extends Controller
                 'jumlah_anak.required'=>'Data tidak boleh kosong',
                 'besaran_uang.required'=>'Data tidak boleh kosong',
                 'jumlah_anak.numeric'=>'Hanya angka',
+                'jumlah_anak.min'=>'Angka tidak boleh min',
                 'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
 
                 ];
         $valid=Validator::make(Input::all(),$rules,$sms);
@@ -112,30 +114,66 @@ class tunjanganController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //$rules=['kode_jabatan'=>'required|unique:jabatans',
-        //        'nama_jabatan'=>'required',
-        //        'besaran_uang'=>'required|numeric'];
-        //$sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
-        //        'kode_jabatan.unique'=>'Data tidak boleh sama',
-        //        'nama_jabatan.required'=>'Data tidak boleh kosong',
-        //        'besaran_uang.required'=>'Data tidak boleh kosong',
-        //        'besaran_uang.numeric'=>'Hanya angka'
-        //       ];
-        //$valid=Validator::make(Input::all(),$rules,$sms);
-        //if ($valid->fails()) {
+        $tunjangan = tunjangan::where('id',$id)->first();
+        if ($tunjangan['kode_tunjangan'] != request('kode_tunjangan'))
+        {
+            $rules=['kode_tunjangan'=>'required|unique:tunjangans',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'status'=>'required',
+                'jumlah_anak'=>'required|numeric|min:1',
+                'besaran_uang'=>'required|numeric|min:1'];
+            $sms=['kode_tunjangan.required'=>'Data tidak boleh kosong',
+                'kode_tunjangan.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'status.required'=>'Data tidak boleh kosong',
+                'jumlah_anak.required'=>'Data tidak boleh kosong',
+                'besaran_uang.required'=>'Data tidak boleh kosong',
+                'jumlah_anak.numeric'=>'Hanya angka',
+                'jumlah_anak.min'=>'Angka tidak boleh min',
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
+
+                ];
+        }    
+        else
+        {
+            $rules=['kode_tunjangan'=>'required',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'status'=>'required',
+                'jumlah_anak'=>'required|numeric|min:0',
+                'besaran_uang'=>'required|numeric|min:1'];
+            $sms=['kode_tunjangan.required'=>'Data tidak boleh kosong',
+                'kode_tunjangan.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'status.required'=>'Data tidak boleh kosong',
+                'jumlah_anak.required'=>'Data tidak boleh kosong',
+                'besaran_uang.required'=>'Data tidak boleh kosong',
+                'jumlah_anak.numeric'=>'Hanya angka',
+                'jumlah_anak.min'=>'Angka tidak boleh min',
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
+
+                ];
+        }
+        $valid=Validator::make(Input::all(),$rules,$sms);
+        if ($valid->fails()) {
 
              
-        //    return redirect('tunjangan/edit')
-        //    ->withErrors($valid)
-        //    ->withInput();
-        //}
-        //else
-        //{
+            return redirect()->back()
+            ->withErrors($valid)
+            ->withInput();
+        }
+        else
+        {
         $tunjanganUp=Request::all();
         $tunjangan=tunjangan::find($id);
         $tunjangan->update($tunjanganUp);
         return redirect('tunjangan');
-        //}
+        }
     }
 
     /**

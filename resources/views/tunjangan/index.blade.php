@@ -38,7 +38,12 @@
 							<td><center>{{$data->jabatan->nama_jabatan}}</center></td>
 							<td><center>{{$data->golongan->nama_golongan}}</center></td>
 							<td><center>{{$data->status}}</center></td>
-							<td><center>{{$data->jumlah_anak}}</center></td>
+							
+							@if($data->jumlah_anak > 0)
+							<td><center>{{$data->jumlah_anak}} anak</center></td>
+							@else
+							<td><center>belum punya anak</center></td>
+							@endif
 							<td><center>{{$data->besaran_uang}}</center></td>
 							<td align="center"><center>
                                     <a href="{{route('tunjangan.edit', $data->id)}}" class="btn btn-primary"> Edit</a></center>
@@ -46,7 +51,7 @@
 
                                 <td ><center>
                                 	<center>
-                                  <a data-toggle="modal" href="#delete{{ $data->id }}" class="btn btn-danger" title="Delete" data-toggle="tooltip" align="center"><strong>X</strong>&nbsp;Hapus</a>
+                                  <a data-toggle="modal" href="#delete{{ $data->id }}" class="btn btn-danger" title="Delete" data-toggle="tooltip" align="center">Hapus</a>
                                   @include('modals.delete', [
                                     'url' => route('tunjangan.destroy', $data->id),
                                     'model' => $data

@@ -65,7 +65,7 @@
                                 <select id="status" name="status" class="form-control">
                                     <option value="">-: pilih status :-</option>
                                     <option value="menikah">menikah</option>
-                                    <option value="belum_menikah">belum menikah</option>
+                                    <option value="belum menikah">belum menikah</option>
                                 </select>
                                 @if ($errors->has('status'))
                                     <span class="help-block">
@@ -79,7 +79,7 @@
                             <label for="jumlah_anak" class="col-md-2 control-label">jumlah anak</label>
 
                             <div class="col-md-6">
-                                <input id="jumlah_anak" type="numeric" class="form-control" name="jumlah_anak" value="{{ old('jumlah_anak') }}"  autofocus>
+                                <input id="jumlah_anak" type="number" class="form-control" name="jumlah_anak" value="{{ old('jumlah_anak') }}"  autofocus>
 
                                 @if ($errors->has('jumlah_anak'))
                                     <span class="help-block">

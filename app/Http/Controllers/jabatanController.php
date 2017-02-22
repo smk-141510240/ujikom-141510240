@@ -41,12 +41,13 @@ class jabatanController extends Controller
     {
         $rules=['kode_jabatan'=>'required|unique:jabatans',
                 'nama_jabatan'=>'required',
-                'besaran_uang'=>'required|numeric'];
+                'besaran_uang'=>'required|numeric|min:1'];
         $sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
                 'kode_jabatan.unique'=>'Data tidak boleh sama',
                 'nama_jabatan.required'=>'Data tidak boleh kosong',
                 'besaran_uang.required'=>'Data tidak boleh kosong',
-                'besaran_uang.numeric'=>'Hanya angka'
+                'besaran_uang.numeric'=>'Hanya angka',
+                'besaran_uang.min'=>'Angka tidak boleh min',
                 ];
         $valid=Validator::make(Input::all(),$rules,$sms);
         if ($valid->fails()) {
@@ -99,20 +100,36 @@ class jabatanController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $rules=['kode_jabatan'=>'required|unique:jabatans',
+        $jabatan1 = jabatan::where('id',$id)->first();
+        if ($jabatan1['kode_jabatan'] != request('kode_jabatan'))
+        {
+            $rules=['kode_jabatan'=>'required|unique:jabatans',
                 'nama_jabatan'=>'required',
                 'besaran_uang'=>'required|numeric'];
-        $sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
+            $sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
                 'kode_jabatan.unique'=>'Data tidak boleh sama',
                 'nama_jabatan.required'=>'Data tidak boleh kosong',
                 'besaran_uang.required'=>'Data tidak boleh kosong',
                 'besaran_uang.numeric'=>'Hanya angka'
                 ];
+        }
+        else
+        {
+            $rules=['kode_jabatan'=>'required',
+                'nama_jabatan'=>'required',
+                'besaran_uang'=>'required|numeric'];
+            $sms=['kode_jabatan.required'=>'Data tidak boleh kosong',
+                'kode_jabatan.unique'=>'Data tidak boleh sama',
+                'nama_jabatan.required'=>'Data tidak boleh kosong',
+                'besaran_uang.required'=>'Data tidak boleh kosong',
+                'besaran_uang.numeric'=>'Hanya angka'
+                ];
+        }
         $valid=Validator::make(Input::all(),$rules,$sms);
         if ($valid->fails()) {
 
              
-            return redirect('jabatan/edit')
+            return redirect()->back()
             ->withErrors($valid)
             ->withInput();
         }
