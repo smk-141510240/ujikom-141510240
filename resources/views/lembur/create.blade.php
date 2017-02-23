@@ -9,24 +9,7 @@
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/lembur') }}">
     {{ csrf_field() }}
 
-    <div class="form-group{{ $errors->has('kode_lembur_id') ? ' has-error' : '' }}">
-                            <label for="kode_lembur_id" class="col-md-2 control-label">kode lembur</label>
-
-                            <div class="col-md-6">
-                                <select id="kode_lembur_id" name="kode_lembur_id" class="form-control">
-                                    <option value="">-: pilih kode kategori lembur :-</option>
-                                    @foreach($kategori as $data)
-                                    <option value="{{$data->id}}">{{$data->kode_lembur}}</option>
-                                    @endforeach
-                                </select>
-
-                                @if ($errors->has('kode_lembur_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('kode_lembur_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    
     <div class="form-group{{ $errors->has('pegawai_id') ? ' has-error' : '' }}">
                             <label for="pegawai_id" class="col-md-2 control-label">nama pegawai</label>
 

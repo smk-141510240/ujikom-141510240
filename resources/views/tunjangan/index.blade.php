@@ -11,7 +11,7 @@
 			<div class="table-responsive table-border">
 			<br>
 			<center>
-			<a href="{{url('tunjangan/create')}}" class="btn btn-success">Tambah bang</a>
+			<a href="{{url('tunjangan/create')}}" class="btn btn-success">Tambah </a>
 			</center>
 			<br>
 				<table class="table" border="0">

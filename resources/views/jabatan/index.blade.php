@@ -10,8 +10,26 @@
 
 			<div class="table-responsive table-border">
 			<br>
+			<form action="jabatan/?jabatan=nama_jabatan">
+                                <div class="form-group input-group">
+                                <input type="search" class="form-control" name="nama_jabatan" placeholder="cari nama jabatan..."><br>
+                                </div>
+                                <div class="form-group">                               
+                                <button type="submit" class="btn btn-success">
+                                    Cari
+                                </button>
+                            	<a href="/jabatan" class="btn btn-warning">
+                                    Reset
+                                </a>
+                            	
+                            	</div>
+
+                        
+
+                                </div>
+                            </form>
 			<center>
-			<a href="{{url('jabatan/create')}}" class="btn btn-success">Tambah bang</a>
+			<a href="{{url('jabatan/create')}}" class="btn btn-success">Tambah </a>
 			</center>
 			<br>
 				<table class="table" border="0">
@@ -46,6 +64,7 @@
 					@endforeach		
 					</tbody>
 				</table>
+				{{$jabatan->links()}}
 			</div>
 			</div>
 			</div>

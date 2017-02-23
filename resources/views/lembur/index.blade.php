@@ -11,7 +11,7 @@
             <div class="table-responsive">
             <br>
             <center>
-            <a href="{{url('lembur/create')}}" class="btn btn-success">Tambah bang</a>
+            <a href="{{url('lembur/create')}}" class="btn btn-success">Tambah </a>
             </center>
             <br>
                 <table class="table table-striped table-bordered table-hover">
@@ -22,6 +22,8 @@
                             <th><center>NIP</center></th>
                             <th><center>nama pegawai</center></th>
                             <th><center>jumlah jam</center></th>
+                            <th><center>besaran uang</center></th>
+                            <th><center>jumlah</center></th>
                             <th colspan="2"><center>Action</center></th>
                         </tr>
                     </thead>
@@ -36,6 +38,8 @@
                             <td><center>{{$data->pegawai->nip}}</center></td>
                             <td><center>{{$data->pegawai->User->name}}</center></td>
                             <td><center>{{$data->jumlah_jam}}</center></td>
+                            <td><center>{{$data->kategori_lembur->besaran_uang}}</center></td>
+                            <td><center>{{$data->jumlah_jam * $data->kategori_lembur->besaran_uang}}</center></td>
                             <td align="center"><center>
                                     <a href="{{route('lembur.edit', $data->id)}}" class="btn btn-primary"> Edit</a></center>
                                 </td>

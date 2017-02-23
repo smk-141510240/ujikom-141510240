@@ -43,12 +43,10 @@ class lemburController extends Controller
      */
     public function store(Request $request)
     {
-        $rules=['kode_lembur_id'=>'required|unique:lembur_pegawais',
-                'pegawai_id'=>'required',
+        $lembur_pegawai=Request::all();
+        $rules=[
                 'jumlah_jam'=>'required|numeric|min:1'];
-        $sms=['kode_lembur_id.required'=>'Data tidak boleh kosong',
-                'kode_lembur_id.unique'=>'Data tidak boleh sama',
-                'pegawai_id.required'=>'Data tidak boleh kosong',
+        $sms=[
                 'jumlah_jam.required'=>'Data tidak boleh kosong',
                 'jumlah_jam.numeric'=>'Hanya angka',
                 'jumlah_jam.min'=>'Angka tidak boleh min',
@@ -64,8 +62,18 @@ class lemburController extends Controller
         else
         {
         //alert()->success('Data Tersimpan');
-        $lembur=Request::all();
-        lembur_pegawai::create($lembur);
+            $pegawai = pegawai::where('id',$lembur_pegawai['pegawai_id'])->first();
+        $check = kategori_lembur::where('jabatan_id',$pegawai->jabatan_id)->where('golongan_id',$pegawai->golongan_id)->first();
+        if(!isset($check)){
+            $pegawai = pegawai::with('User')->get();
+            $missing_count = true;
+            // dd($error_klnf);
+            return view('lemburpegawai.create',compact('kategori_lembur','pegawai','missing_count'));
+        }
+        $lembur_pegawai['kode_lembur_id'] = $check->id;
+        
+        lembur_pegawai::create($lembur_pegawai);
+        
         return redirect('lembur');
         }
     }
@@ -108,12 +116,9 @@ class lemburController extends Controller
         $lembur1 = lembur_pegawai::where('id',$id)->first();
         if ($lembur1['kode_lembur_id'] != request('kode_lembur_id'))
         {
-            $rules=['kode_lembur_id'=>'required|unique:lembur_pegawais',
-                'pegawai_id'=>'required',
+            $rules=[
                 'jumlah_jam'=>'required|numeric|min:1'];
-            $sms=['kode_lembur_id.required'=>'Data tidak boleh kosong',
-                'kode_lembur_id.unique'=>'Data tidak boleh sama',
-                'pegawai_id.required'=>'Data tidak boleh kosong',
+            $sms=[
                 'jumlah_jam.required'=>'Data tidak boleh kosong',
                 'jumlah_jam.numeric'=>'Hanya angka',
                 'jumlah_jam.min'=>'Angka tidak boleh min',

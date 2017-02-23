@@ -102,6 +102,12 @@ class pegawaiController extends Controller
     public function edit($id)
     {
         //
+        //$pegawai=pegawai::with('User')->find($id);
+        $pegawai=pegawai::find($id);
+        $jabatan = jabatan::all();
+        $golongan = golongan::all();
+        $user = User::all();
+        return view('pegawai.edit',compact('pegawai','jabatan','golongan','user'));
     }
 
     /**
@@ -114,6 +120,110 @@ class pegawaiController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // $pegawai1 = pegawai::where('id',$id)->first();
+        // $user1 = User::where('id',$id)->first();
+        // if ($pegawai1['nip'] != request('nip'))
+        // {   
+        //     $this->validate($request,[
+        //     'name' => 'required|max:255',
+        //     'nip' => 'required|min:3|numeric|unique:pegawais',
+        //     'email' => 'required|email|max:255|unique:users',
+        //     'password' => 'required|min:6|confirmed',
+        //     'permission' => 'required|max:255',
+        //     ]);
+        // }
+        // else
+        // {
+        //     $this->validate($request,[
+        //     'name' => 'required|max:255',
+        //     'nip' => 'required|min:3|numeric',
+        //     'email' => 'required|email|max:255',
+        //     'password' => 'required|min:6|confirmed',
+        //     'permission' => 'required|max:255',
+        // ]);
+        // }
+        // $file = Input::file('photo');
+        // $dis = public_path().'/assets';
+        // $filen = str_random(6).'_'.$file->getClientOriginalName();
+        // $upload = $file->move($dis,$filen);
+        // if(Input::hasFile('photo'))
+        // {
+        //     $pegawai=pegawai::find($id);
+        //     $pegawai->nip = Input::get('nip');
+        //     $pegawai->jabatan_id = Input::get('jabatan_id');
+        //     $pegawai->golongan_id = Input::get('golongan_id');
+        //     $user=User::find($id);
+        //     $user->name = Input::get('name');
+        //     $user->permission = Input::get('permission');    
+        // }
+        // $pegawai->photo=$filen;
+        // $pegawai->user_id = $user->id;
+        
+        // $pegawai->update();
+        // return redirect('pegawai');
+        $pegawai1 = pegawai::where('id',$id)->first();
+        if ($pegawai1['nip'] != request('nip'))
+        {
+            $rules=['nip'=>'required|unique:pegawais',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'photo' => 'required'];
+            $sms=['nip.required'=>'Data tidak boleh kosong',
+                'nip.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'photo.required'=>'Data tidak boleh kosong',
+                ];
+        }
+        else
+        {
+            $rules=['nip'=>'required',
+                'jabatan_id'=>'required',
+                'golongan_id'=>'required',
+                'photo' => 'required'];
+            $sms=['nip.required'=>'Data tidak boleh kosong',
+                'nip.unique'=>'Data tidak boleh sama',
+                'jabatan_id.required'=>'Data tidak boleh kosong',
+                'golongan_id.required'=>'Data tidak boleh kosong',
+                'photo.required'=>'Data tidak boleh kosong',
+                ];
+        }
+        $valid=Validator::make(Input::all(),$rules,$sms);
+        if ($valid->fails()) {
+
+             
+            return redirect()->back()
+            ->withErrors($valid)
+            ->withInput();
+        }
+        else
+        {
+        $file = Input::file('photo');
+        $dis = public_path().'/assets';
+        $filen = str_random(6).'_'.$file->getClientOriginalName();
+        $upload = $file->move($dis,$filen);
+        if(Input::hasFile('photo'))
+        {
+            
+            
+            $pegawai = pegawai::find($id);
+            $pegawai->nip = Input::get('nip');
+            $pegawai->jabatan_id = Input::get('jabatan_id');
+            $pegawai->golongan_id = Input::get('golongan_id');
+
+            
+        
+            
+            
+        }
+        $user=User::all();
+        $pegawai->photo=$filen;
+        $pegawai->user_id = $pegawai->User->id;
+        $pegawai->update();
+        // $pegawai->update();
+
+        return redirect('/pegawai');
+        }
     }
 
     /**

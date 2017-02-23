@@ -58,6 +58,7 @@
                             <li><a href="{{ url('/kategori') }}">Kategori lembur</a></li>
                             <li><a href="{{ url('/tunjangan') }}">Tunjangan</a></li>
                             <li><a href="{{ url('/lembur') }}">Lembur pegawai</a></li>
+                            <li><a href="{{ url('/tunjangan_pegawai')}}">Tunjangan pegawai</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>

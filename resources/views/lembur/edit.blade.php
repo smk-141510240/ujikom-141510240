@@ -8,29 +8,13 @@
                 <div class="panel-body">
     <div class="form-horizontal">
     {!! Form::model($lembur,['method' => 'PATCH','route'=>['lembur.update',$lembur->id]]) !!}
-    <div class="form-group{{ $errors->has('kode_lembur_id') ? ' has-error' : '' }}">
-                            <label for="kode_lembur_id" class="col-md-2 control-label">kode lembur</label>
-
-                            <div class="col-md-6">
-                                <select id="kode_lembur_id" name="kode_lembur_id" class="form-control" required>
-                                    <option value="">-: pilih kode kategori lembur :-</option>
-                                    @foreach($kategori as $data)
-                                    <option value="{{$data->id}}">{{$data->kode_lembur}}</option>
-                                    @endforeach
-                                </select>
-
-                                @if ($errors->has('kode_lembur_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('kode_lembur_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    
     <div class="form-group{{ $errors->has('pegawai_id') ? ' has-error' : '' }}">
                             <label for="pegawai_id" class="col-md-2 control-label">nama pegawai</label>
 
                             <div class="col-md-6">
-                                <select id="pegawai_id" name="pegawai_id" class="form-control" required>
+                                <select id="pegawai_id" name="pegawai_id" class="form-control" disabled>
+                                    <option value="{{$lembur->pegawai_id}}">{{$lembur->pegawai->User->name}}</option>
                                     <option value="">-: pilih nama pegawai :-</option>
                                     @foreach($pegawai as $data)
                                     <option value="{{$data->id}}">{{$data->User->name}}</option>

@@ -11,7 +11,7 @@
             <div class="table-responsive">
             <br>
             <center>
-            <a href="{{url('pegawai/create')}}" class="btn btn-success">Tambah bang</a>
+            <a href="{{url('pegawai/create')}}" class="btn btn-success">Tambah </a>
             </center>
             <br>
                 <table class="table table-striped table-bordered table-hover">

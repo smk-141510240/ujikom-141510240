@@ -23,3 +23,4 @@ Route::resource('golongan','golonganController');
 Route::resource('kategori','kategoriController');
 Route::resource('tunjangan','tunjanganController');
 Route::resource('lembur','lemburController');
+Route::resource('tunjangan_pegawai','tunjanganpegawaiController');
