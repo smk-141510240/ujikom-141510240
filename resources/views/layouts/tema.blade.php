@@ -83,6 +83,8 @@
 
 			<li><a href="{{ url('/tunjangan_pegawai') }}"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg> Tunjangan pegawai</a></li>
 
+			<li><a href="{{ url('/penggajian')}}"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"/></svg> penggajian</a></li>
+			
 			
 		</ul>
 		

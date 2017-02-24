@@ -22,9 +22,9 @@ class pegawai extends Model
     {
     	return $this->belongsto('App\golongan','golongan_id');
     }
-    public function tunjangan_pegawais()
+    public function tunjangan_pegawai()
     {
-    	return $this->HasOne('App\tunjangan_pegawais','pegawai_id');
+    	return $this->HasOne('App\tunjangan_pegawai','pegawai_id');
     }
     public function lembur_pegawai()
     {
