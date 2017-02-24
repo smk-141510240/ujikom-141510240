@@ -24,3 +24,5 @@ Route::resource('kategori','kategoriController');
 Route::resource('tunjangan','tunjanganController');
 Route::resource('lembur','lemburController');
 Route::resource('tunjangan_pegawai','tunjanganpegawaiController');
+Route::get('/error', 'BackController@error');
+Route::get('/kembali', 'BackController@kembali');

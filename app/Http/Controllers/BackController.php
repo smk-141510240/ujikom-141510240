@@ -17,5 +17,10 @@ class BackController extends Controller
         
         return view('back');
     }
-
+    public function error()
+    {
+        
+        return view('errors.503');
+    }
+    
 }

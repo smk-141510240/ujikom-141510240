@@ -20,6 +20,14 @@ class pegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('ManagerMiddleware');
+    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         //
@@ -235,5 +243,8 @@ class pegawaiController extends Controller
     public function destroy($id)
     {
         //
+        pegawai::find($id)->delete();
+        //alert()->success('Data Terhapus');
+        return redirect('pegawai');
     }
 }

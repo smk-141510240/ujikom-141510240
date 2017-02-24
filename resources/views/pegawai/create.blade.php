@@ -89,6 +89,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Tambah Pegawai</div>
                 <div class="panel-body">
+                <div class="form-horizontal">
 
                         {{ csrf_field() }}
 

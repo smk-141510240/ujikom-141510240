@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.tema')
 @section('content')
 
 <div class="container">
@@ -10,24 +10,6 @@
 
 			<div class="table-responsive table-border">
 			<br>
-			<form action="tunjangan_pegawai/?tunjangan_pegawai=nama_jabatan">
-                                <div class="form-group input-group">
-                                <input type="search" class="form-control" name="nama_jabatan" placeholder="cari..."><br>
-                                </div>
-                                <div class="form-group">                               
-                                <button type="submit" class="btn btn-success">
-                                    Cari
-                                </button>
-                            	<a href="/tunjangan_pegawai" class="btn btn-warning">
-                                    Reset
-                                </a>
-                            	
-                            	</div>
-
-                        
-
-                                </div>
-                            </form>
 			<center>
 			<a href="{{url('tunjangan_pegawai/create')}}" class="btn btn-success">Tambah</a>
 			</center>

@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -35,9 +35,10 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        My Application (^o^)/
+                    <a class="navbar-brand" href="{{ url('/') }}"><span>My</span>&nbsp;Application (^o^)/
                     </a>
+                         
+                    
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
